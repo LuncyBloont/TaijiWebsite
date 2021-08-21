@@ -1,0 +1,28 @@
+.quik_title {
+	font-size: 12pt;
+	cursor: pointer;
+	border: darkgoldenrod solid 6px;
+	border-width: 0 0 0 5px;
+	margin: 0px;
+	margin-top: 7px;
+	margin-bottom: 4px;
+	padding-left: 5pt;
+}
+.quik_body {
+	font-size: 10pt;
+	border: cadetblue solid 1px;
+	cursor: pointer;
+	margin-bottom: 20px;
+	border-radius: 8px;
+}
+.quik_body p {
+	padding: 0.2pt;
+	margin: 0px 16px;
+}
+.quik_time {
+	float: right;
+	margin-right: 0cm;
+	font-size: 8pt;
+	display: inline-block;
+	width: 70%;
+}

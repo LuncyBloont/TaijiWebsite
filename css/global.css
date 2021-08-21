@@ -1,0 +1,49 @@
+.under_line2 {
+	width: 100%;
+	height: 2px;
+	margin: 0 auto;
+	background: none;
+	border: gray solid 1px;
+	border-width: 0 0 2px 0;
+	overflow: hidden;
+}
+.helper {
+	background: #9B0D14;
+	color: azure;
+	display: inline-block;
+	width: 17px;
+	height: 17px;
+	font-size: 10pt;
+	border-radius: 8px;
+	text-align: center;
+	position: relative;
+	top: -8px;
+	cursor: pointer;
+}
+.helper_box {
+	position: absolute;
+	max-width: 0px;
+	height: auto;
+	display: inline-block;
+	font-size: 14pt;
+	overflow: hidden;
+	border: #808080 solid 0px;
+	background: yellow;
+	z-index: 10;
+	border-radius: 5px;
+	margin-left: 6px;
+	padding: 0px;
+	opacity: 0;
+	transition: opacity 0.4s;
+}
+.helper:hover +.helper_box {
+	max-width: 250px;
+	border: darkred solid 1px;
+	padding: 4px;
+	opacity: 1;
+	box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.3);
+}
+.paper {
+	width: 80%;
+	margin: 5px auto;
+}

@@ -1,0 +1,11 @@
+.img_in_paragragh {
+	width: auto;
+	max-width: 93%;
+	/*border: slategrey solid 1px;*/
+}
+.h2_in_paragragh {
+	font-size: larger;
+}
+.h1_in_paragragh {
+	font-size: xx-large;
+}

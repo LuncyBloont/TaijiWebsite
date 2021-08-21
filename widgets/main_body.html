@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body style="border: #FF0 solid 2px; background: black;">
+		<style>
+		.main_body_title {
+			text-align: center;
+			font-size: 1.7cm;
+			color: aliceblue;
+		}
+		.main_body_button {
+			width: 3.4cm;
+			background: rgba(205, 205, 205, 0.3);
+			border: none;
+			padding: 6px;
+			border-radius: 4px;
+			margin: 4px 24px;
+			color: aliceblue;
+			cursor: pointer;
+			background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 0%);
+			transition: all 0.2s;
+		}
+		.mbb_l {
+			border-radius: 12px 4px 4px 12px;
+		}
+		.mbb_r {
+			border-radius: 4px 12px 12px 4px;
+		}
+		.main_body_button:hover {
+			transform: scaleX(1.04);
+		}
+		.title_box {
+			background: #9b0d14;
+		}
+		</style>
+		<div class="main_body_title">
+			山东大学太极拳文化站
+		</div>
+		<div style="margin-left: 50%; width: max-content; transform: translateX(-50%);">
+			<button class="main_body_button mbb_l" onclick="main_body_goto('index.html')">主页</button>
+			<button class="main_body_button" onclick="main_body_goto('what.html')">太极拳简介</button>
+			<button class="main_body_button" onclick="main_body_goto('process.html')">太极拳申遗</button>
+			<button class="main_body_button" onclick="main_body_goto('blog.html')">论坛</button>
+			<button class="main_body_button mbb_r" onclick="main_body_goto('aboutus.html')">联系我们</button>
+		</div>
+		
+	</body>
+</html>
