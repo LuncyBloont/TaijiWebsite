@@ -1,7 +1,8 @@
 .img_in_paragragh {
 	width: auto;
-	max-width: 93%;
-	/*border: slategrey solid 1px;*/
+	max-width: 80%;
+	min-width: 5px;
+	min-height: 5px;
 }
 .h2_in_paragragh {
 	font-size: larger;

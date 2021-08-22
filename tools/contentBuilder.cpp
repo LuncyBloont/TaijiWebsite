@@ -13,6 +13,22 @@ const std::string files[] = {
     "aboutus_page.txt"
 };
 
+std::string& replace_all(std::string& str, const std::string& old_value, const std::string& new_value)     
+{ 
+    for (std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())  
+    { 
+        if((pos = str.find(old_value,pos)) != std::string::npos)     
+        { 
+            str.replace(pos, old_value.length(), new_value);
+        }   
+        else
+        {
+            break;
+        }    
+    }     
+    return str;     
+}     
+
 bool enformat(std::string filename)
 {
     std::ifstream rf(CONTENTS_PATH + filename);
@@ -39,7 +55,8 @@ bool enformat(std::string filename)
                 std::string ss;
                 std::getline(rf, ss);
                 if (ss.find("@") == 0 && (ss[1] == '\n' || ss[1] == '\r')) break;
-                body += "<p>" + ss.substr(0, ss.size() - 1) + "<p />";
+                replace_all(ss, "\"", "\\\"");
+                body += "<p>" + ss.substr(0, ss.size() - 1) + "<br /><p />";
             }
             content += "    \"" + title + "\", \"" + body + "\",\n";
         }
@@ -77,6 +94,6 @@ int main()
         }
     }
     
-    std::getchar();
+    // std::getchar();
     return 0;
 }

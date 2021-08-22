@@ -3,3 +3,21 @@
 我们是……
 
 @
+
+@@文章1标题[文章链接|日期]
+文章内容段落1
+段落2
+段落……
+其中，$$[C#F66||文章内容]$$为彩色文字，类似的还有其他标签。
+
+下面这行一个@代表文章结束
+@
+
+@@文章2标题-各种标签例子[文章链接|日期]
+$$[H#555|none|标题]$$效果的文字
+图片
+$$[I|https://p1.ssl.qhimg.com/t01eb9dbe3823766fb3.jpg]$$
+半透明图片 $$[I|https://cdn-sqn.aigei.com/assets/site/img/tool/demo-bgremover-new.png]$$；半透明图片,指定背景 $$[I#37F|https://cdn-sqn.aigei.com/assets/site/img/tool/demo-bgremover-new.png]$$
+$$[M||图片$$[I|https://cdn-sqn.aigei.com/assets/site/img/tool/demo-bgremover-new.png]$$和文字居中]$$
+普通文字 VS $$[C#F4F|none|彩色文字]$$，还有文字$$[S|#aaF|强调]$$。
+@

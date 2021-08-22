@@ -5,15 +5,23 @@
 	border-width: 0 0 0 5px;
 	margin: 0px;
 	margin-top: 7px;
-	margin-bottom: 4px;
+	margin-bottom: 0px;
 	padding-left: 5pt;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 0 8px 0 0;
+	padding-bottom: 1em;
+	padding-top: 0.7em;
 }
 .quik_body {
+	color: dimgray;
 	font-size: 10pt;
-	border: cadetblue solid 1px;
+	/*border: cadetblue solid 1px;*/
 	cursor: pointer;
 	margin-bottom: 20px;
-	border-radius: 8px;
+	border-radius: 0px 0px 8px 8px;
+	margin-top: 0px;
+	background: rgba(255, 255, 255, 0.7);
+	padding-bottom: 1.4em;
 }
 .quik_body p {
 	padding: 0.2pt;
@@ -25,4 +33,6 @@
 	font-size: 8pt;
 	display: inline-block;
 	width: auto;
+	padding: 3px;
+	padding-right: 2em;
 }

@@ -3,12 +3,12 @@ function renderList(id, massage, titleClass = "", descriptionClass = "", timeCla
 ) {
 	if (titleStyle == null) {
 		titleStyle = {
-			"background": "rgba(12, 12, 12, 0.1)",
+			"background": "rgba(255, 255, 255, 0.9)",
 			"margin": "0.3cm",
 			"marginBottom": "0cm",
 			"width": "auto",
-			"borderRadius": "4px 4px 0 0",
-			"padding": "4px",
+			"borderRadius": "12px 12px 0 0",
+			"padding": "3em 2em 2em 2em",
 			"fontSize": "16pt",
 			"fontWeight": "bold",
 			"textAlign": "center",
@@ -21,20 +21,25 @@ function renderList(id, massage, titleClass = "", descriptionClass = "", timeCla
 			"marginTop": "0cm",
 			"marginBottom": "1cm",
 			"width": "auto",
-			"padding": "4px",
-			"paddingTop": "1cm",
+			"padding": "4em",
+			"paddingTop": "0cm",
 			"paddingBottom": "2cm",
 			"border": "rgba(12, 12, 12, 0.1) solid 2px",
-			"borderWidth": "0 0 0 2px",
+			"borderWidth": "0 0 0 0px",
 			"textIndent": "2em",
-			"overflow": "hidden"
+			"overflow": "hidden",
+			"background": "rgba(255, 255, 255, 0.9)",
+			"borderRadius": "0 0 12px 12px"
 		};
 	}
 	if (timeStyle == null) {
 		timeStyle = {
-			"float": "right",
 			"fontWeight": "normal",
-			"fontSize": "10pt"
+			"fontSize": "10pt",
+			"whiteSpace": "nowrap",
+			"display": "block",
+			"margin": "2em",
+			"marginBottom": "0em"
 		};
 	}
 	
@@ -53,6 +58,7 @@ function renderList(id, massage, titleClass = "", descriptionClass = "", timeCla
 		for (pair in timeStyle) {
 			tt.style[pair] = timeStyle[pair];
 		}
+		
 		t.appendChild(tt);
 		t.m_href = massage[i].substring(massage[i].lastIndexOf("[") + 1, massage[i].lastIndexOf("|"));
 		t.onclick = function() {
@@ -84,68 +90,108 @@ function renderList(id, massage, titleClass = "", descriptionClass = "", timeCla
 	}
 }
 
-function mformat(str) {
-	var parts = [];
-	var scp = str;
-	var rs = "";
-	while (scp.length > 0) {
-		if (scp.indexOf("$$[") >= 0) {
-			parts.push(scp.substring(0, scp.indexOf("$$[")));
-			parts.push(scp.substring(scp.indexOf("$$["), scp.indexOf("]$$") + 3));
-			scp = scp.substring(scp.indexOf("]$$") + 3, scp.length);
+function makeTree(str, ps, i) {
+	for (; i < str.length;)
+	{
+		if (str.substring(i, str.length).indexOf("$$[") == 0) {
+			var sps = [str.substring(i, str.length).charAt(3)];
+			ps.push(sps);
+			i = makeTree(str, sps, i + 4);
 		} else {
-			parts.push(scp);
-			scp = "";
+			var lm = str.substring(i, str.length).indexOf("$$[") + i;
+			var rm = str.substring(i, str.length).indexOf("]$$") + i;
+			lm = lm >= i ? lm : str.length;
+			rm = rm >= i ? rm : str.length;
+			
+			if (lm <= rm) {
+				ps.push(str.substring(i, lm));
+				i = lm;
+			} else {
+				ps.push(str.substring(i, rm));
+				return rm + 3;
+			}
 		}
 	}
-	for (i in parts) {
-		var s = parts[i];
-		var type = 'T';
-		if (s.indexOf("$$[") >= 0) {
-			type = s.charAt(s.indexOf("$$[") + 3);
-			s = s.substring(s.indexOf("$$[") + 4, s.indexOf("]$$"));
+	return i;
+}
+
+function debug(ps, space) {
+	for (var i = 0; i < ps.length; i++) {
+		if (typeof(ps[i]) == "string") {
+			console.log(space + ps[i]);
+		} else {
+			debug(ps[i], space + "--- ");
 		}
-		var sp;
-		var styles;
-		var schar = "|";
-		switch (type) {
-			case 'T':
-			s = s.replace("\n", "<br />");
-			break;
-			
-			case 'I':
-			sp = s.split(schar);
-			styles = "";
-			styles += sp.length > 1 ? ("background: " + sp[1] + ";") : '';
-			s = "<img class=\"img_in_paragragh\" src=\"" + sp[0] + "\" style=\"" + styles + "\" />";
-			break;
-			
-			case 'H':
-			sp = s.split(schar);
-			styles = "";
-			styles += sp.length > 1 ? ("background: " + sp[1] + ";") : '';
-			styles += sp.length > 2 ? ("color: " + sp[2] + ";") : '';
-			s = "<span class=\"h1_in_paragragh\" style=\"" + styles + "\">" + sp[0] + "</span>";
-			break;
-			
-			case 'S':
-			sp = s.split(schar);
-			styles = "";
-			styles += sp.length > 1 ? ("background: " + sp[1] + ";") : '';
-			styles += sp.length > 2 ? ("color: " + sp[2] + ";") : '';
-			s = "<span class=\"h2_in_paragragh\" style=\"" + styles + "\">" + sp[0] + "</span>";
-			break;
-			
-			case 'C':
-			sp = s.split(schar);
-			styles = "";
-			styles += sp.length > 1 ? ("background: " + sp[1] + ";") : '';
-			styles += sp.length > 2 ? ("color: " + sp[2] + ";") : '';
-			s = "<span style=\"" + styles + "\">" + sp[0] + "</span>";
-			break;
+	}
+	console.log(space + ps[0]);
+}
+
+function emptyToNone(s) {
+	if (s.length == 0) return "none";
+	return s;
+}
+
+function treeToStr(ps) {
+	var rs = "";
+	for (var i = 1; i < ps.length; i++) {
+		if (typeof(ps[i]) == "string") {
+			rs += ps[i];
+		} else {
+			rs += treeToStr(ps[i]);
 		}
+	}
+	var s = "";
+	var col = "";
+	var bg = "";
+	switch (ps[0]) {
+		case 'T':
+		s = rs;
+		break;
 		
-		rs += s;
+		case 'I':
+		bg = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		s = "<img class=\"img_in_paragragh\" src=\"" + rs + "\" style=\"background: " + bg + "\" />";
+		break;
+		
+		case 'H':
+		col = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		bg = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		s = "<span class=\"h1_in_paragragh\" style=\"background: " + bg + "; color: " + col + "\">" + rs + "</span>";
+		break;
+		
+		case 'S':
+		col = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		bg = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		s = "<span class=\"h2_in_paragragh\" style=\"background: " + bg + "; color: " + col + "\">" + rs + "</span>";
+		break;
+		
+		case 'C':
+		col = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		bg = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		s = "<span style=\"background: " + bg + "; color: " + col + "\">" + rs + "</span>";
+		break;
+		
+		case 'M':
+		col = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		bg = emptyToNone(rs.substring(0, rs.indexOf("|")));
+		rs = rs.substring(rs.indexOf("|") + 1, rs.length);
+		s = "<div style=\"text-align:center; width: 100%; text-indent: 0em; background: " + bg + "; color: " + col + "\">" + rs + "</div>";
+		break;
 	}
-	return rs;
+	
+	return s;
+}
+
+function mformat(str) {
+	var parts = ["T"];
+	makeTree(str, parts, 0);
+	return treeToStr(parts);
 }
